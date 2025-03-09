@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:social_app/responsive/mobile_screen_layout.dart';
+import 'package:social_app/responsive/responsive_layout_screen.dart';
+import 'package:social_app/responsive/web_screen_layout.dart';
 import 'package:social_app/utils/colors.dart';
 
 void main() {
@@ -17,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: mobileBackgroundColor,
       ),
-      home: Scaffold(body: Text('Lets build Instagram'),),
+      home: const ResponsiveLayout(webscreenlayout: WebScreenLayout(), mobileScreenLayout: MobileScreenLayout()),
     );
   }
 }
