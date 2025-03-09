@@ -5,17 +5,18 @@ import 'package:social_app/responsive/mobile_screen_layout.dart';
 import 'package:social_app/responsive/responsive_layout_screen.dart';
 import 'package:social_app/responsive/web_screen_layout.dart';
 import 'package:social_app/utils/colors.dart';
+import 'package:social_app/utils/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(
       options: const FirebaseOptions(
-        apiKey: 'AIzaSyCCTt_ZeBT89MmaYLkiA9tlZHiWRUQLiK0',
-        appId: '1:744185152072:web:062a5199f79d9f50534e7d',
-        messagingSenderId: '744185152072',
-        projectId: 'social-app-658a7',
-        storageBucket: 'social-app-658a7.firebasestorage.app',
+        apiKey: apiKey,
+        appId: appId,
+        messagingSenderId: messagingSenderId,
+        projectId: projectId,
+        storageBucket: storageBucket,
       ),
     );
   } else {
