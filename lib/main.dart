@@ -5,6 +5,7 @@ import 'package:social_app/responsive/mobile_screen_layout.dart';
 import 'package:social_app/responsive/responsive_layout_screen.dart';
 import 'package:social_app/responsive/web_screen_layout.dart';
 import 'package:social_app/screens/login_screen_layout.dart';
+import 'package:social_app/screens/signup_screen_layout.dart';
 import 'package:social_app/utils/colors.dart';
 import 'package:social_app/utils/firebase_options.dart';
 
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
       //   webscreenlayout: WebScreenLayout(),
       //   mobileScreenLayout: MobileScreenLayout(),
       // ),
-      home: LoginScreen(),
+      home: SignupScreen(),
     );
   }
 }
