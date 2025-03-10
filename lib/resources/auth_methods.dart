@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../models/user.dart' as model;
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -24,15 +25,17 @@ class AuthMethods {
           password: password,
         );
 
+        model.User user = model.User(
+          email: email,
+          uid: cred.user!.uid,
+          username: username,
+          bio: bio,
+          followers: [],
+          following: [],
+        );
+
         // add user to database
-        await _firestore.collection('users').doc(cred.user!.uid).set({
-          'email': email,
-          'username': username,
-          'bio': bio,
-          'uid': cred.user!.uid,
-          'followers': [],
-          'following': [],
-        });
+        await _firestore.collection('users').doc(cred.user!.uid).set(user.toJson());
         res = "success";
       }
     } on FirebaseAuthException catch (e) {
