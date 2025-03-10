@@ -1,6 +1,10 @@
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:social_app/resources/auth_methods.dart";
+import "package:social_app/responsive/mobile_screen_layout.dart";
+import "package:social_app/responsive/responsive_layout_screen.dart";
+import "package:social_app/responsive/web_screen_layout.dart";
+import "package:social_app/screens/signup_screen_layout.dart";
 import "package:social_app/utils/colors.dart";
 import "package:social_app/utils/utils.dart";
 import "package:social_app/widgets/text_field_layout.dart";
@@ -24,6 +28,12 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordcontroller.dispose();
   }
 
+  void navigateToSignUp() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => SignupScreen()));
+  }
+
   void loginUser() async {
     setState(() {
       _isLoading = true;
@@ -37,6 +47,14 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = false;
     });
     if (res == 'success') {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            webscreenlayout: WebScreenLayout(),
+            mobileScreenLayout: MobileScreenLayout(),
+          ),
+        ),
+      );
     } else {
       showSnackBar(res, context);
     }
@@ -109,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: navigateToSignUp,
                     child: Container(
                       child: const Text(
                         "Sign up.",

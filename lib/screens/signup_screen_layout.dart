@@ -1,6 +1,10 @@
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:social_app/resources/auth_methods.dart";
+import "package:social_app/responsive/mobile_screen_layout.dart";
+import "package:social_app/responsive/responsive_layout_screen.dart";
+import "package:social_app/responsive/web_screen_layout.dart";
+import "package:social_app/screens/login_screen_layout.dart";
 import "package:social_app/utils/colors.dart";
 import "package:social_app/utils/utils.dart";
 import "package:social_app/widgets/text_field_layout.dart";
@@ -26,6 +30,12 @@ class _SignupScreenState extends State<SignupScreen> {
     _passwordcontroller.dispose();
     _biocontroller.dispose();
     _usernamecontroller.dispose();
+  }
+
+  void navigateToLogin() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 
   @override
@@ -92,10 +102,27 @@ class _SignupScreenState extends State<SignupScreen> {
                   });
                   if (res != 'success') {
                     showSnackBar(res, context);
+                  } else {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder:
+                            (context) => const ResponsiveLayout(
+                              webscreenlayout: WebScreenLayout(),
+                              mobileScreenLayout: MobileScreenLayout(),
+                            ),
+                      ),
+                    );
                   }
                 },
                 child: Container(
-                  child: _isloading ? const Center(child: CircularProgressIndicator(color: primaryColor,),) : const Text('Log in'),
+                  child:
+                      _isloading
+                          ? const Center(
+                            child: CircularProgressIndicator(
+                              color: primaryColor,
+                            ),
+                          )
+                          : const Text('Sign Up'),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -118,10 +145,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: navigateToLogin,
                     child: Container(
                       child: const Text(
-                        "Sign up.",
+                        "Log In.",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 8),
