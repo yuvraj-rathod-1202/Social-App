@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:social_app/resources/auth_methods.dart";
 import "package:social_app/utils/colors.dart";
+import "package:social_app/utils/utils.dart";
 import "package:social_app/widgets/text_field_layout.dart";
 
 class SignupScreen extends StatefulWidget {
@@ -16,6 +17,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _passwordcontroller = TextEditingController();
   final TextEditingController _biocontroller = TextEditingController();
   final TextEditingController _usernamecontroller = TextEditingController();
+  bool _isloading = false;
 
   @override
   void dispose() {
@@ -51,13 +53,13 @@ class _SignupScreenState extends State<SignupScreen> {
                 textEditingController: _usernamecontroller,
               ),
               //bio
-              const SizedBox(height: 24,),
+              const SizedBox(height: 24),
               TextFieldInput(
                 hintText: 'Enter Your bio',
                 textInputType: TextInputType.text,
                 textEditingController: _biocontroller,
               ),
-              const SizedBox(height: 24,),
+              const SizedBox(height: 24),
               //email
               TextFieldInput(
                 hintText: 'Enter Your Email',
@@ -76,10 +78,24 @@ class _SignupScreenState extends State<SignupScreen> {
               //login button
               InkWell(
                 onTap: () async {
-                  String res = await AuthMethods().signupUser(email: _emailcontroller.text, password: _passwordcontroller.text, username: _usernamecontroller.text, bio: _biocontroller.text);
+                  setState(() {
+                    _isloading = true;
+                  });
+                  String res = await AuthMethods().signupUser(
+                    email: _emailcontroller.text,
+                    password: _passwordcontroller.text,
+                    username: _usernamecontroller.text,
+                    bio: _biocontroller.text,
+                  );
+                  setState(() {
+                    _isloading = false;
+                  });
+                  if (res != 'success') {
+                    showSnackBar(res, context);
+                  }
                 },
                 child: Container(
-                  child: const Text('Log in'),
+                  child: _isloading ? const Center(child: CircularProgressIndicator(color: primaryColor,),) : const Text('Log in'),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
